@@ -1,0 +1,10 @@
+{
+  "AUTH0_ALLOW_DELETE": false,
+  "AUTH0_KEYWORD_REPLACE_MAPPINGS": {
+    "API_NAME": "home-api",
+    "API_AUDIENCE": "https://home-api.dev.example.com",
+    "SPA_CALLBACKS": ["http://localhost:5173"],
+    "SPA_LOGOUT_URLS": ["http://localhost:5173"],
+    "SPA_WEB_ORIGINS": ["http://localhost:5173"]
+  }
+}

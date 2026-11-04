@@ -1,0 +1,10 @@
+{
+  "AUTH0_ALLOW_DELETE": false,
+  "AUTH0_KEYWORD_REPLACE_MAPPINGS": {
+    "API_NAME": "home-api",
+    "API_AUDIENCE": "https://home-api.example.com",
+    "SPA_CALLBACKS": ["https://app.example.com"],
+    "SPA_LOGOUT_URLS": ["https://app.example.com"],
+    "SPA_WEB_ORIGINS": ["https://app.example.com"]
+  }
+}

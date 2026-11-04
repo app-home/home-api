@@ -1,0 +1,9 @@
+# Copia a terraform.tfvars (ignorado por git) y ajusta.
+api_name       = "home-api"
+api_identifier = "https://home-api.example.com"
+
+spa_callbacks   = ["http://localhost:5173", "https://app.example.com"]
+spa_logout_urls = ["http://localhost:5173", "https://app.example.com"]
+spa_web_origins = ["http://localhost:5173", "https://app.example.com"]
+
+m2m_scopes = ["read:messages"]

@@ -1,0 +1,67 @@
+# Configuración declarativa del tenant para el Auth0 Deploy CLI.
+# Los marcadores entre doble almohadilla (texto) o doble arroba (listas) se reemplazan
+# con AUTH0_KEYWORD_REPLACE_MAPPINGS (ver config.dev.json y config.prod.json).
+
+resourceServers:
+  - name: '##API_NAME##'
+    identifier: '##API_AUDIENCE##'
+    signing_alg: RS256
+    token_lifetime: 3600
+    allow_offline_access: false
+    skip_consent_for_verifiable_first_party_clients: true
+    enforce_policies: true
+    token_dialect: access_token_authz
+    scopes:
+      - value: read:messages
+        description: Leer mensajes
+      - value: write:messages
+        description: Crear mensajes
+
+clients:
+  - name: '##API_NAME## SPA'
+    description: 'Aplicación SPA de ejemplo que consume ##API_NAME##'
+    app_type: spa
+    is_first_party: true
+    oidc_conformant: true
+    callbacks: @@SPA_CALLBACKS@@
+    allowed_logout_urls: @@SPA_LOGOUT_URLS@@
+    web_origins: @@SPA_WEB_ORIGINS@@
+    grant_types:
+      - authorization_code
+      - refresh_token
+    token_endpoint_auth_method: none
+    jwt_configuration:
+      alg: RS256
+    refresh_token:
+      rotation_type: rotating
+      expiration_type: expiring
+      token_lifetime: 2592000
+
+  - name: '##API_NAME## M2M'
+    description: 'Cliente machine-to-machine para sistemas que llaman a ##API_NAME##'
+    app_type: non_interactive
+    grant_types:
+      - client_credentials
+    token_endpoint_auth_method: client_secret_post
+    jwt_configuration:
+      alg: RS256
+
+clientGrants:
+  - client_id: '##API_NAME## M2M'
+    audience: '##API_AUDIENCE##'
+    scope:
+      - read:messages
+
+roles:
+  - name: '##API_NAME##-reader'
+    description: Puede leer mensajes
+    permissions:
+      - permission_name: read:messages
+        resource_server_identifier: '##API_AUDIENCE##'
+  - name: '##API_NAME##-writer'
+    description: Puede leer y crear mensajes
+    permissions:
+      - permission_name: read:messages
+        resource_server_identifier: '##API_AUDIENCE##'
+      - permission_name: write:messages
+        resource_server_identifier: '##API_AUDIENCE##'

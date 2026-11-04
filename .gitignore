@@ -1,0 +1,29 @@
+# Node
+node_modules/
+dist/
+coverage/
+*.log
+
+# Secretos y entorno local
+.env
+.env.*
+!.env.example
+
+# Terraform (el state contiene secretos: nunca al repo)
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+# .terraform.lock.hcl SÍ se versiona
+
+# Auth0 Deploy CLI (exports locales)
+infra/deploy-cli/export/
+
+# SO / editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

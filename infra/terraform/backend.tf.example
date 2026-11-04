@@ -1,0 +1,11 @@
+# Ejemplo de backend remoto en S3 (renombra a backend.tf y ajusta).
+# Requiere Terraform >= 1.10 para el bloqueo nativo con use_lockfile.
+terraform {
+  backend "s3" {
+    bucket       = "mi-bucket-de-terraform-state"
+    key          = "home-api/auth0/terraform.tfstate"
+    region       = "us-east-1"
+    encrypt      = true
+    use_lockfile = true
+  }
+}

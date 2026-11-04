@@ -1,0 +1,53 @@
+name: Infra / Terraform (Auth0)
+
+on:
+  pull_request:
+    paths:
+      - 'infra/terraform/**'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: Acción a ejecutar
+        type: choice
+        options: [plan, apply]
+        default: plan
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra/terraform
+    steps:
+      - uses: actions/checkout@v5
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive
+      - run: terraform init -backend=false
+      - run: terraform validate
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    # Configura este Environment en GitHub con aprobación manual requerida.
+    environment: auth0-terraform
+    defaults:
+      run:
+        working-directory: infra/terraform
+    env:
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+      TF_VAR_api_identifier: ${{ vars.API_IDENTIFIER }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: hashicorp/setup-terraform@v3
+      # Requiere un backend remoto configurado (ver infra/terraform/backend.tf.example);
+      # sin él, el state se perdería al terminar el job.
+      - run: terraform init
+      - run: terraform plan -out=tfplan
+      - if: inputs.action == 'apply'
+        run: terraform apply tfplan

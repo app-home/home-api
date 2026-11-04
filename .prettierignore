@@ -1,0 +1,10 @@
+dist
+coverage
+node_modules
+package-lock.json
+infra/**/.terraform
+infra/deploy-cli/export
+*.tf
+*.tfvars
+# Plantilla del Deploy CLI: los @@CLAVE@@ se sustituyen antes de parsear el YAML
+infra/deploy-cli/tenant.yaml

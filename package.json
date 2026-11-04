@@ -1,0 +1,44 @@
+{
+  "name": "home-api",
+  "version": "0.1.0",
+  "description": "API protegida con JWT de Auth0 (Express 5 + TypeScript)",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=26.13.0 <27"
+  },
+  "scripts": {
+    "dev": "node --watch --env-file-if-exists=.env src/server.ts",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "deploy-cli:export": "a0deploy export -c infra/deploy-cli/config.dev.json --format=yaml --output_folder=infra/deploy-cli/export",
+    "deploy-cli:import:dev": "a0deploy import -c infra/deploy-cli/config.dev.json -i infra/deploy-cli/tenant.yaml",
+    "deploy-cli:import:prod": "a0deploy import -c infra/deploy-cli/config.prod.json -i infra/deploy-cli/tenant.yaml"
+  },
+  "dependencies": {
+    "@auth0/auth0-express-api": "^1.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
+    "helmet": "^8.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "auth0-deploy-cli": "^9.2.0",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "jose": "^6.2.15",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1"
+  }
+}
