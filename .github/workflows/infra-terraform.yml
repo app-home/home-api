@@ -24,7 +24,7 @@ jobs:
         working-directory: infra/terraform
     steps:
       - uses: actions/checkout@v5
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v4
       - run: terraform fmt -check -recursive
       - run: terraform init -backend=false
       - run: terraform validate
@@ -44,7 +44,7 @@ jobs:
       TF_VAR_api_identifier: ${{ vars.API_IDENTIFIER }}
     steps:
       - uses: actions/checkout@v5
-      - uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v4
       # Requiere un backend remoto configurado (ver infra/terraform/backend.tf.example);
       # sin él, el state se perdería al terminar el job.
       - run: terraform init
