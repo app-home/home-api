@@ -23,7 +23,7 @@ jobs:
       run:
         working-directory: infra/terraform
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v3
       - run: terraform fmt -check -recursive
       - run: terraform init -backend=false
@@ -43,7 +43,7 @@ jobs:
       AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
       TF_VAR_api_identifier: ${{ vars.API_IDENTIFIER }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v3
       # Requiere un backend remoto configurado (ver infra/terraform/backend.tf.example);
       # sin él, el state se perdería al terminar el job.
